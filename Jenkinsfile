@@ -13,14 +13,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building the Docker image'
-                bat 'docker build -t devops-cicd-app:1.0 .'
+                sh 'docker build -t devops-cicd-app:1.0 .'
             }
         }
 
         stage('Verify Image') {
             steps {
                 echo 'Checking that the Docker image exists'
-                bat 'docker image inspect devops-cicd-app:1.0'
+                sh 'docker image inspect devops-cicd-app:1.0'
             }
         }
     }

@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -7,6 +8,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 echo 'Getting source code from GitHub'
@@ -50,8 +52,12 @@ pipeline {
                     ssh -i "$SSH_KEY" \
                     -o BatchMode=yes \
                     -o StrictHostKeyChecking=no \
-                    "$SSH_HOST" \
-                    "docker rm -f devops-cicd-deploy; docker run -d --name devops-cicd-deploy -p 3002:3000 --restart unless-stopped devops-cicd-app:1.0"
+                    "$SSH_HOST" "docker rm -f devops-cicd-deploy"
+
+                    ssh -i "$SSH_KEY" \
+                    -o BatchMode=yes \
+                    -o StrictHostKeyChecking=no \
+                    "$SSH_HOST" "docker run -d --name devops-cicd-deploy -p 3002:3000 --restart unless-stopped devops-cicd-app:1.0"
                 '''
             }
         }
